@@ -1,0 +1,95 @@
+type User {
+  id: ID!
+  name: String!
+  email: String!
+}
+
+input UserInput {
+  name: String!
+  email: String!
+  password: String!
+}
+
+type Book {
+  id: ID!
+  title: String!
+  author: String!
+  description: String!
+  price: Float!
+  publishedDate: String!
+  coverImage: String!
+}
+
+input BookInput {
+  title: String!
+  author: String!
+  description: String!
+  price: Float!
+  publishedDate: String!
+  coverImage: String!
+}
+
+type Order {
+  id: ID!
+  user: User
+  books: [OrderBook!]!
+  totalPrice: Float!
+  status: String!
+}
+
+type OrderBook {
+  book: Book
+  quantity: Int!
+}
+
+input OrderInput {
+  userId: ID!
+  books: [OrderBookInput!]!
+  totalPrice: Float!
+}
+
+input OrderBookInput {
+  bookId: ID!
+  quantity: Int!
+} 
+type Review {
+  id: ID!
+  user: User!
+  book: Book!
+  rating: Int!
+  comment: String
+}
+
+input ReviewInput {
+  userId: ID!
+  bookId: ID!
+  rating: Int!
+  comment: String
+}
+
+
+
+type Query {
+  usersGetAll: [User!]!
+  userGetOne(id: ID!): User!
+  booksGetAll: [Book!]!
+  bookGetOne(id: ID!): Book!
+  ordersGetAll: [Order!]!
+  orderGetOne(id: ID!): Order!
+  reviewsGetAll: [Review!]!
+  reviewGetOne(id: ID!): Review!
+
+}
+
+type Mutation {
+  userCreate(input: UserInput): User
+  userLogin(email: String!, password: String!): String
+  bookCreate(input: BookInput): Book
+  bookUpdate(id: ID!, input: BookInput): Book
+  bookDelete(id: ID!): Book
+  orderCreate(input: OrderInput): Order
+  orderUpdate(id: ID!, status: String!): Order
+  reviewCreate(input: ReviewInput): Review
+  reviewUpdate(id: ID!, input: ReviewInput): Review
+  reviewDelete(id: ID!): Review
+}
